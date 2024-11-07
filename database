@@ -1,0 +1,57 @@
+-- Create the database
+CREATE DATABASE BusPassManagement;
+
+-- Use the created database
+USE BusPassManagement;
+
+-- Create Users Table
+CREATE TABLE Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15),
+    address VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+insert into Users value(01,"Divya","divya7798@gmail.com",56677,"wagholi");
+insert into Users value(02,"dipa","dipa7796@gmail.com",56655,"wagholi");
+insert into Users value(03,"siya","pranjals7795@gmail.com",56671,"wagholi");
+insert into Users value(04,"yash","pranjals7799@gmail.com",56676,"wagholi");
+insert into Users value(05,"ram","pranjals7791@gmail.com",56687,"wagholi");
+select*from userstable;
+-- Create BusRoutes Table
+CREATE TABLE BusRoutes (
+    route_id INT AUTO_INCREMENT PRIMARY KEY,
+    route_name VARCHAR(100) NOT NULL,
+    start_location VARCHAR(100) NOT NULL,
+    end_location VARCHAR(100) NOT NULL,
+    distance DECIMAL(5, 2), -- Distance in kilometers
+    duration INT, -- Duration in minutes
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create BusPasses Table
+CREATE TABLE BusPasses (
+    pass_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    route_id INT,
+    pass_type ENUM('Monthly', 'Quarterly', 'Annual') NOT NULL,
+    issue_date DATE NOT NULL,
+    expiry_date DATE NOT NULL,
+    status ENUM('Active', 'Expired', 'Cancelled') DEFAULT 'Active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (route_id) REFERENCES BusRoutes(route_id)
+);
+
+-- Create Transactions Table
+CREATE TABLE Transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    pass_id INT,
+    amount DECIMAL(10, 2) NOT NULL,
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    payment_method ENUM('Credit Card', 'Debit Card', 'Cash', 'Online') NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (pass_id) REFERENCES BusPasses(pass_id)
+);

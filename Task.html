@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Color Changing Webpage</title>
+    <link rel="stylesheet" href="taskstyle.css">
+</head>
+<body>
+  <header>
+    <h1>Customize the page color </br>to your preference </br> by entering your desired color</h1>
+  </header>
+
+  <div class="container">
+    <div class="entryarea">
+      <input type="text" id="colorInputColor" required>
+      <div class="labelline">Enter Preferred Color</div>
+    </div>
+  </div>
+</br>
+  <a class="button" onclick="changecolor()">Change Color</a>
+  <script>
+      function changecolor() {
+        let color=document.getElementById('colorInputColor').value;
+        document.body.style.backgroundColor = color;
+        document.getElementById('colorInputText').value=color;
+      }
+    </script>
+</body>
+</html>
